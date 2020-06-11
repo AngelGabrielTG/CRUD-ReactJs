@@ -1,4 +1,4 @@
-/*cargarListener();
+cargarListener();
 
 function cargarListener() {
     document.addEventListener('DOMContentLoaded', SideNav);
@@ -6,7 +6,7 @@ function cargarListener() {
 }
 
 function SideNav() {
-    var elems = document.querSelectorAll('.sidenav');
+    var elems = document.querySelectorAll('.sidenav');
     var instances = M.Sidenav.init(elems);
 }
 
@@ -23,4 +23,4 @@ function DatePic() {
     }
     var elems = document.querySelectorAll('.datepicker');
     var instances = M.Datepicker.init(elems, options);
-}*/
+}

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Clientes from './components/Clientes';
 import NuevoCliente from './components/NuevoCliente';
 import Cliente from './components/Cliente';
+import Header from './components/Header';
 
 import clienteAxios from './config/axios';
 
@@ -12,23 +13,30 @@ function App() {
 
   //STATE DE LA APP
   const [listado, guardarCliente] = useState([]);
+  const [consulta, guardarConsulta] = useState(true);
 
   useEffect( () => {
-    const consultarAPI = () => {
-      clienteAxios.get('/api/clientes')
-        .then(respuesta => {
-          //COLOCAR EN EL STATE EL RESULTADO
-          guardarCliente(respuesta.data);
-        })
-        .catch(error => {
-          console.log(error)
-        })  
+    if(consulta) {
+      const consultarAPI = () => {
+        clienteAxios.get('/api/clientes')
+          .then(respuesta => {
+            //COLOCAR EN EL STATE EL RESULTADO
+            guardarCliente(respuesta.data);
+
+            //DESABILITAR LA CONSULTA
+            guardarConsulta(false);
+          })
+          .catch(error => {
+            console.log(error)
+          })  
+      }
+      consultarAPI();
     }
-    consultarAPI();
-  }, [] );
+  }, [consulta] );
 
   return (
     <Router>
+      <Header />
       <Switch>
         <Route
           exact
@@ -39,7 +47,7 @@ function App() {
         <Route
           exact
           path="/nuevo"
-          component={NuevoCliente}
+          component={() => <NuevoCliente guardarConsulta={guardarConsulta}/>}
         />
 
         <Route
